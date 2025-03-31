@@ -1,3 +1,4 @@
+#[derive(Clone)]
 pub struct Percentage(u8);
 
 impl Percentage {
