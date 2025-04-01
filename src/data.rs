@@ -3,82 +3,103 @@ use crate::pokemon::{Pokemon, Pokemove, Poketype};
 use std::collections::HashMap;
 use std::sync::Arc;
 
-pub fn pokemoves() -> HashMap<String, Arc<Pokemove>> {
-    let mut pokemoves = HashMap::new();
-
-    pokemoves.insert(
-        String::from("scratch"),
-        Arc::new(Pokemove {
-            name: String::from("Scratch"),
-            poketype: Poketype::Normal,
-            power: 20,
-            accuracy: Percentage::new(100),
-        }),
-    );
-
-    pokemoves.insert(
-        String::from("bubble_gun"),
-        Arc::new(Pokemove {
-            name: String::from("Bubble Gun"),
-            poketype: Poketype::Water,
-            power: 85,
-            accuracy: Percentage::new(95),
-        }),
-    );
-
-    pokemoves.insert(
-        String::from("inferno"),
-        Arc::new(Pokemove {
-            name: String::from("Inferno"),
-            poketype: Poketype::Fire,
-            power: 90,
-            accuracy: Percentage::new(80),
-        }),
-    );
-
-    pokemoves
+fn pokemove_index() -> HashMap<&'static str, u32> {
+    HashMap::from([("scratch", 1), ("bubble_gun", 2), ("inferno", 3)])
 }
 
-pub fn pokemon() -> HashMap<String, Pokemon> {
+pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
+    HashMap::from([
+        (
+            1,
+            Arc::new(Pokemove {
+                name: String::from("Scratch"),
+                poketype: Poketype::Normal,
+                power: 20,
+                accuracy: Percentage::new(100),
+            }),
+        ),
+        (
+            2,
+            Arc::new(Pokemove {
+                name: String::from("Bubble Gun"),
+                poketype: Poketype::Water,
+                power: 85,
+                accuracy: Percentage::new(95),
+            }),
+        ),
+        (
+            3,
+            Arc::new(Pokemove {
+                name: String::from("Inferno"),
+                poketype: Poketype::Fire,
+                power: 90,
+                accuracy: Percentage::new(80),
+            }),
+        ),
+    ])
+}
+
+pub fn pokemon_index() -> HashMap<&'static str, u32> {
+    HashMap::from([("squirtle", 1), ("charmander", 2)])
+}
+
+pub fn pokemon() -> HashMap<u32, Pokemon> {
     let pokemoves = pokemoves();
 
-    let mut pokemon = HashMap::new();
-
-    pokemon.insert(
-        String::from("squirtle"),
-        Pokemon {
-            name: String::from("Squirtle"),
-            poketype: Poketype::Water,
-            pokemoves: [
-                Some(pokemoves.get("scratch").unwrap().clone()),
-                Some(pokemoves.get("bubble_gun").unwrap().clone()),
-                None,
-                None,
-            ],
-            level: Percentage::new(10),
-            accuracy: Percentage::new(95),
-            max_hp: 160,
-            current_hp: 160,
-        },
-    );
-
-    pokemon.insert(
-        String::from("charmander"),
-        Pokemon {
-            name: String::from("Charmander"),
-            poketype: Poketype::Fire,
-            pokemoves: [
-                Some(pokemoves.get("scratch").unwrap().clone()),
-                Some(pokemoves.get("inferno").unwrap().clone()),
-                None,
-                None,
-            ],
-            level: Percentage::new(10),
-            accuracy: Percentage::new(95),
-            max_hp: 160,
-            current_hp: 160,
-        },
-    );
-
-    pokemon
+    HashMap::from([
+        (
+            pokemon_index().get("squirtle").unwrap().clone(),
+            Pokemon {
+                name: String::from("Squirtle"),
+                poketype: Poketype::Water,
+                pokemoves: [
+                    Some(
+                        pokemoves
+                            .get(&pokemove_index().get("scratch").unwrap())
+                            .unwrap()
+                            .clone(),
+                    ),
+                    Some(
+                        pokemoves
+                            .get(&pokemove_index().get("bubble_gun").unwrap())
+                            .unwrap()
+                            .clone(),
+                    ),
+                    None,
+                    None,
+                ],
+                level: Percentage::new(10),
+                accuracy: Percentage::new(95),
+                max_hp: 160,
+                current_hp: 160,
+            },
+        ),
+        (
+            pokemon_index().get("charmander").unwrap().clone(),
+            Pokemon {
+                name: String::from("Charmander"),
+                poketype: Poketype::Fire,
+                pokemoves: [
+                    Some(
+                        pokemoves
+                            .get(&pokemove_index().get("scratch").unwrap())
+                            .unwrap()
+                            .clone(),
+                    ),
+                    Some(
+                        pokemoves
+                            .get(&pokemove_index().get("inferno").unwrap())
+                            .unwrap()
+                            .clone(),
+                    ),
+                    None,
+                    None,
+                ],
+                level: Percentage::new(10),
+                accuracy: Percentage::new(95),
+                max_hp: 160,
+                current_hp: 160,
+            },
+        ),
+    ])
 }

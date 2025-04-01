@@ -1,9 +1,10 @@
 use crate::pokemath::Percentage;
 use rand::Rng;
 use std::error::Error;
+use std::fmt::Debug;
 use std::sync::Arc;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Pokemon {
     pub name: String,
     pub poketype: Poketype,
@@ -53,6 +54,7 @@ impl Pokemon {
     }
 }
 
+#[derive(Debug)]
 pub struct Pokemove {
     pub name: String,
     pub poketype: Poketype,
@@ -60,7 +62,7 @@ pub struct Pokemove {
     pub accuracy: Percentage,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub enum Poketype {
     Fire,
     Water,
