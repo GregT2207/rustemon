@@ -2,9 +2,10 @@ mod data;
 mod pokemath;
 mod pokemon;
 
+use colored::Colorize;
 use data::{pokemon as pokemon_data, pokemon_index};
 use pokemon::Pokemon;
-use rand::{Rng, random};
+use rand::Rng;
 use std::collections::HashMap;
 use std::io;
 
@@ -12,8 +13,7 @@ const USER_POKEMON_MAX: usize = 4;
 const ENEMY_POKEMON_MAX: usize = 2;
 
 fn main() {
-    println!("Welcome to Rustémon!");
-    println!("=========================");
+    print_pokeball_message("Prepare for battle!");
 
     let pokemon_data = pokemon_data();
 
@@ -25,6 +25,26 @@ fn main() {
     //     Ok(false) => println!("Oh no! Squirtle missed..."),
     //     Err(err) => eprintln!("Attack failed: {}", err),
     // }
+}
+
+fn print_pokeball_message(message: &str) {
+    println!("");
+    println!("{}", "          ██████████          ".red());
+    println!("{}", "      ██████████████████      ".red());
+    println!("{}", "    ██████████████████████    ".red());
+    println!("{}", "  ██████████████████████████  ".red());
+    println!("{}", "  ████████ Rustémon ████████  ".red());
+    println!("{}", "██████████████████████████████".red());
+    println!("{}", "████████████      ████████████".red());
+    println!("{}", "              ⚪               ".white());
+    println!("{}", "████████████      ████████████".white());
+    println!("{}", "██████████████████████████████".white());
+    println!("{}", format!("████ {:^20} ████", message).white());
+    println!("{}", "  ██████████████████████████  ".white());
+    println!("{}", "    ██████████████████████    ".white());
+    println!("{}", "      ██████████████████      ".white());
+    println!("{}", "          ██████████          ".white());
+    println!("");
 }
 
 fn build_user_team(pokemon_data: &HashMap<u32, Pokemon>) -> Vec<Pokemon> {
