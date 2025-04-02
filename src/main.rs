@@ -26,14 +26,14 @@ fn main() {
     let user_current_pokemon = &mut user_pokemon[0];
     let enemy_current_pokemon = &mut enemy_pokemon[0];
 
-    pad();
+    sleep_print();
     println!("Enemy trainer sent out {}!", enemy_current_pokemon.name);
-    pad();
+    sleep_print();
     println!("You sent out {}!", user_current_pokemon.name);
 
     loop {
         // User selects a move
-        pad();
+        sleep_print();
         println!(
             "What move should {} use? (Enter a number)",
             user_current_pokemon.name
@@ -53,7 +53,7 @@ fn main() {
         // User attacks
         match pokemove_number.trim().parse::<u8>() {
             Ok(pokemove_number) => {
-                pad();
+                sleep_print();
 
                 if !try_attack(
                     user_current_pokemon,
@@ -77,14 +77,14 @@ fn main() {
             }
         };
 
-        pad();
+        sleep_print();
         if !try_attack(enemy_current_pokemon, user_current_pokemon, move_index) {
             continue;
         }
     }
 }
 
-fn pad() {
+fn sleep_print() {
     let delay = time::Duration::from_millis(10);
 
     println!("\n>");
