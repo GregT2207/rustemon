@@ -62,12 +62,19 @@ impl Pokemon {
 
 impl Pokemon {
     fn calculate_damage(attacking_move: &Pokemove, attacker: &Pokemon, target: &Pokemon) -> u16 {
+        // Get move base power
         let mut damage = attacking_move.power as f32;
 
+        // Apply type matchup
         damage *= attacking_move
             .poketype
             .effectiveness(&target.poketype)
             .multiplier();
+
+        // Check same-type bonus
+        if attacker.poketype == attacking_move.poketype {
+            damage *= 1.5;
+        }
 
         damage.round() as u16
     }
@@ -103,7 +110,7 @@ impl Effectiveness {
     }
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum Poketype {
     Normal,
     Fire,
