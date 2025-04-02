@@ -3,16 +3,19 @@ mod pokemath;
 mod pokemon;
 
 use colored::Colorize;
+use core::time;
 use data::{pokemon as pokemon_data, pokemon_index};
 use pokemon::Pokemon;
 use rand::Rng;
 use std::collections::HashMap;
-use std::io;
+use std::io::{self, Write, stdout};
+use std::thread::sleep;
 
 const USER_POKEMON_MAX: usize = 4;
 const ENEMY_POKEMON_MAX: usize = 2;
 
 fn main() {
+    print!("\n\n\n\n\n\n");
     print_pokeball_message("Prepare for battle!");
 
     let pokemon_data = pokemon_data();
@@ -20,11 +23,81 @@ fn main() {
     let mut user_pokemon = build_user_team(&pokemon_data);
     let mut enemy_pokemon = build_enemy_team(&pokemon_data);
 
-    // match squirtle.attack(0, &mut charmander) {
-    //     Ok(true) => println!("Squirtle hit Charmander!"),
-    //     Ok(false) => println!("Oh no! Squirtle missed..."),
-    //     Err(err) => eprintln!("Attack failed: {}", err),
-    // }
+    let user_current_pokemon = &mut user_pokemon[0];
+    let enemy_current_pokemon = &mut enemy_pokemon[0];
+
+    pad();
+    println!("Enemy trainer sent out {}!", enemy_current_pokemon.name);
+    pad();
+    println!("You sent out {}!", user_current_pokemon.name);
+
+    loop {
+        // User selects a move
+        pad();
+        println!(
+            "What move should {} use? (Enter a number)",
+            user_current_pokemon.name
+        );
+        for (index, pokemove) in user_current_pokemon.pokemoves.iter().enumerate() {
+            if let Some(pokemove) = pokemove {
+                println!("{}: {}", index + 1, pokemove.name)
+            }
+        }
+
+        let mut pokemove_number = String::new();
+        if let Err(err) = io::stdin().read_line(&mut pokemove_number) {
+            eprintln!("Couldn't read move choice: {}", err);
+            continue;
+        }
+
+        // User attacks
+        match pokemove_number.trim().parse::<u8>() {
+            Ok(pokemove_number) => {
+                pad();
+
+                if !try_attack(
+                    user_current_pokemon,
+                    enemy_current_pokemon,
+                    pokemove_number - 1,
+                ) {
+                    continue;
+                }
+            }
+            Err(err) => {
+                eprintln!("Please enter a valid number: {}", err);
+                continue;
+            }
+        }
+
+        // Enemy attacks
+        let move_index = loop {
+            let random_num = rand::rng().random_range(0..4);
+            if enemy_current_pokemon.pokemoves[random_num].is_some() {
+                break random_num as u8;
+            }
+        };
+
+        pad();
+        if !try_attack(enemy_current_pokemon, user_current_pokemon, move_index) {
+            continue;
+        }
+    }
+}
+
+fn pad() {
+    let delay = time::Duration::from_millis(10);
+
+    println!("\n>");
+    for i in 2..102 {
+        print!("\x1B[1A\x1B[2K");
+        stdout().flush().unwrap();
+
+        println!("{}>", "-".repeat(i));
+        stdout().flush().unwrap();
+
+        sleep(delay);
+    }
+    println!("");
 }
 
 fn print_pokeball_message(message: &str) {
@@ -71,8 +144,13 @@ fn build_user_team(pokemon_data: &HashMap<u32, Pokemon>) -> Vec<Pokemon> {
                     Some(new_pokemon) => {
                         user_pokemon.push(new_pokemon.clone());
                         println!(
-                            "Nice choice! Added {} to your team. Choose another...",
-                            new_pokemon.name
+                            "Nice choice! Added {} to your team{}",
+                            new_pokemon.name,
+                            if user_pokemon.len() < USER_POKEMON_MAX {
+                                ". Choose another..."
+                            } else {
+                                ""
+                            }
                         );
                     }
                     None => eprintln!("Rustémon number {} doesn't exist!", pokemon_number),
@@ -101,4 +179,23 @@ fn build_enemy_team(pokemon_data: &HashMap<u32, Pokemon>) -> Vec<Pokemon> {
     }
 
     enemy_pokemon
+}
+
+fn try_attack(attacker: &mut Pokemon, target: &mut Pokemon, move_index: u8) -> bool {
+    let attack_successful = match attacker.attack(move_index, target) {
+        Ok(true) => {
+            println!("{} hit {}!", attacker.name, target.name);
+            true
+        }
+        Ok(false) => {
+            println!("Oh no! {} missed...", attacker.name);
+            true
+        }
+        Err(err) => {
+            eprintln!("Attack failed: {}", err);
+            false
+        }
+    };
+
+    attack_successful
 }
