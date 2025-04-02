@@ -1,4 +1,6 @@
 use crate::pokemath::Percentage;
+use colored::{Color, Colorize};
+use colored::{ColoredString, CustomColor};
 use rand::Rng;
 use std::error::Error;
 use std::fmt::Debug;
@@ -52,6 +54,11 @@ impl Pokemon {
         self.level = Percentage::new(self.level.value() + 1);
         self.level.value()
     }
+
+    pub fn colored_name(&self) -> ColoredString {
+        let color = self.poketype.color();
+        self.name.truecolor(color.0, color.1, color.2)
+    }
 }
 
 #[derive(Debug)]
@@ -82,4 +89,29 @@ pub enum Poketype {
     Fairy,
     Ghost,
     Dragon,
+}
+
+impl Poketype {
+    fn color(&self) -> (u8, u8, u8) {
+        match self {
+            Self::Normal => (168, 167, 122),
+            Self::Fire => (238, 129, 48),
+            Self::Water => (99, 144, 240),
+            Self::Grass => (122, 199, 76),
+            Self::Electric => (247, 208, 44),
+            Self::Ice => (150, 217, 214),
+            Self::Fighting => (194, 46, 40),
+            Self::Poison => (163, 62, 161),
+            Self::Ground => (226, 191, 101),
+            Self::Flying => (169, 143, 243),
+            Self::Psychic => (249, 85, 135),
+            Self::Bug => (166, 185, 26),
+            Self::Rock => (182, 161, 54),
+            Self::Ghost => (115, 87, 151),
+            Self::Dragon => (111, 53, 252),
+            Self::Dark => (112, 87, 70),
+            Self::Steel => (183, 183, 206),
+            Self::Fairy => (214, 133, 173),
+        }
+    }
 }

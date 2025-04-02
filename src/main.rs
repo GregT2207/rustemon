@@ -27,16 +27,19 @@ fn main() {
     let enemy_current_pokemon = &mut enemy_pokemon[0];
 
     sleep_print();
-    println!("Enemy trainer sent out {}!", enemy_current_pokemon.name);
+    println!(
+        "Enemy trainer sent out {}!",
+        enemy_current_pokemon.colored_name()
+    );
     sleep_print();
-    println!("You sent out {}!", user_current_pokemon.name);
+    println!("You sent out {}!", user_current_pokemon.colored_name());
 
     loop {
         // User selects a move
         sleep_print();
         println!(
             "What move should {} use? (Enter a number)",
-            user_current_pokemon.name
+            user_current_pokemon.colored_name()
         );
         for (index, pokemove) in user_current_pokemon.pokemoves.iter().enumerate() {
             if let Some(pokemove) = pokemove {
@@ -145,7 +148,7 @@ fn build_user_team(pokemon_data: &HashMap<u32, Pokemon>) -> Vec<Pokemon> {
                         user_pokemon.push(new_pokemon.clone());
                         println!(
                             "Nice choice! Added {} to your team{}",
-                            new_pokemon.name,
+                            new_pokemon.colored_name(),
                             if user_pokemon.len() < USER_POKEMON_MAX {
                                 ". Choose another..."
                             } else {
@@ -184,11 +187,17 @@ fn build_enemy_team(pokemon_data: &HashMap<u32, Pokemon>) -> Vec<Pokemon> {
 fn try_attack(attacker: &mut Pokemon, target: &mut Pokemon, move_index: u8) -> bool {
     let attack_successful = match attacker.attack(move_index, target) {
         Ok(true) => {
-            println!("{} hit {}!", attacker.name, target.name);
+            println!(
+                "{} hit {} ({} / {})!",
+                attacker.colored_name(),
+                target.colored_name(),
+                target.current_hp,
+                target.max_hp
+            );
             true
         }
         Ok(false) => {
-            println!("Oh no! {} missed...", attacker.name);
+            println!("Oh no! {} missed...", attacker.colored_name());
             true
         }
         Err(err) => {
