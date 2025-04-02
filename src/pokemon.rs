@@ -64,8 +64,22 @@ pub struct Pokemove {
 
 #[derive(Clone, Debug)]
 pub enum Poketype {
+    Normal,
     Fire,
     Water,
     Grass,
-    Normal,
+    Electric,
+    Ice,
+    Fighting,
+    Poison,
+    Ground,
+    Flying,
+    Psychic,
+    Bug,
+    Rock,
+    Dark,
+    Steel,
+    Fairy,
+    Ghost,
+    Dragon,
 }
