@@ -132,8 +132,7 @@ fn build_user_team(pokemon_data: &HashMap<u32, Pokemon>) -> Vec<Pokemon> {
 
     println!("Choose a Rustémon! (Enter a number)");
     for (name, id) in &sorted_pokemon_index {
-        let &pokemon = pokemon().
-        println!("{}: {}", id, name)
+        println!("{}: {}", id, name.to_uppercase())
     }
 
     while user_pokemon.len() < USER_POKEMON_MAX {

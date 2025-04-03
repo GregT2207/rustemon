@@ -1,5 +1,6 @@
 use crate::pokemath::Percentage;
-use colored::{ColoredString, Colorize};
+use colored::{Color, Colorize};
+use colored::{ColoredString, CustomColor};
 use rand::Rng;
 use std::error::Error;
 use std::fmt::Debug;
