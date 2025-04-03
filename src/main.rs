@@ -5,7 +5,7 @@ mod pokemon;
 use colored::Colorize;
 use core::time;
 use data::{pokemon as pokemon_data, pokemon_index};
-use pokemon::Pokemon;
+use pokemon::{Pokemon, PoketypeColor};
 use rand::Rng;
 use std::collections::HashMap;
 use std::io::{self, Write, stdout};
@@ -185,11 +185,14 @@ fn build_enemy_team(pokemon_data: &HashMap<u32, Pokemon>) -> Vec<Pokemon> {
 }
 
 fn try_attack(attacker: &mut Pokemon, target: &mut Pokemon, move_index: u8) -> bool {
-    let attack_successful = match attacker.attack(move_index, target) {
+    let attacking_move = attacker.pokemove_by_index(move_index).unwrap();
+
+    let attack_successful = match attacker.attack(&attacking_move, target) {
         Ok(true) => {
             println!(
-                "{} hit {} ({} / {})!",
+                "{} used {} on {} ({} / {})!",
                 attacker.colored_name(),
+                attacking_move.colored_name(),
                 target.colored_name(),
                 target.current_hp,
                 target.max_hp

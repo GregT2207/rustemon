@@ -18,8 +18,8 @@ pub struct Pokemon {
 }
 
 impl Pokemon {
-    pub fn attack(&mut self, move_index: u8, target: &mut Pokemon) -> Result<bool, Box<dyn Error>> {
-        let attacking_move = self
+    pub fn pokemove_by_index(&self, move_index: u8) -> Result<Arc<Pokemove>, Box<dyn Error>> {
+        let pokemove = self
             .pokemoves
             .get(move_index as usize)
             .ok_or(format!(
@@ -29,6 +29,14 @@ impl Pokemon {
             .as_ref()
             .ok_or(format!("Move {} doesn't exist", move_index + 1))?;
 
+        Ok(Arc::clone(pokemove))
+    }
+
+    pub fn attack(
+        &mut self,
+        attacking_move: &Pokemove,
+        target: &mut Pokemon,
+    ) -> Result<bool, Box<dyn Error>> {
         if !self.attack_landed_by_accuracy(attacking_move.accuracy.value()) {
             return Ok(false);
         }
@@ -53,11 +61,6 @@ impl Pokemon {
         self.level = Percentage::new(self.level.value() + 1);
         self.level.value()
     }
-
-    pub fn colored_name(&self) -> ColoredString {
-        let color = self.poketype.color();
-        self.name.truecolor(color.0, color.1, color.2)
-    }
 }
 
 impl Pokemon {
@@ -80,12 +83,32 @@ impl Pokemon {
     }
 }
 
+impl PoketypeColor for Pokemon {
+    fn name(&self) -> &String {
+        &self.name
+    }
+
+    fn poketype(&self) -> &Poketype {
+        &self.poketype
+    }
+}
+
 #[derive(Debug)]
 pub struct Pokemove {
     pub name: String,
     pub poketype: Poketype,
     pub power: u16,
     pub accuracy: Percentage,
+}
+
+impl PoketypeColor for Pokemove {
+    fn name(&self) -> &String {
+        &self.name
+    }
+
+    fn poketype(&self) -> &Poketype {
+        &self.poketype
+    }
 }
 
 enum Effectiveness {
@@ -336,5 +359,15 @@ impl Poketype {
             Self::Steel => (183, 183, 206),
             Self::Fairy => (214, 133, 173),
         }
+    }
+}
+
+pub trait PoketypeColor {
+    fn name(&self) -> &String;
+    fn poketype(&self) -> &Poketype;
+
+    fn colored_name(&self) -> ColoredString {
+        let color = self.poketype().color();
+        self.name().truecolor(color.0, color.1, color.2)
     }
 }
