@@ -3,13 +3,13 @@ mod pokemath;
 mod pokemon;
 
 use colored::Colorize;
-use core::time;
 use data::pokemon as pokemon_data;
 use pokemon::{Pokemon, PoketypeColor};
 use rand::Rng;
 use std::collections::HashMap;
 use std::io::{self, Write, stdout};
 use std::thread::sleep;
+use std::time::Duration;
 
 const USER_POKEMON_MAX: usize = 4;
 const ENEMY_POKEMON_MAX: usize = 2;
@@ -28,11 +28,18 @@ fn main() {
 
     sleep_print();
     println!(
-        "Enemy trainer sent out {}!",
-        enemy_current_pokemon.colored_name()
+        "Enemy trainer sent out {} ({} / {})!",
+        enemy_current_pokemon.colored_name(),
+        enemy_current_pokemon.current_hp,
+        enemy_current_pokemon.max_hp,
     );
     sleep_print();
-    println!("You sent out {}!", user_current_pokemon.colored_name());
+    println!(
+        "You sent out {} ({} / {})!",
+        user_current_pokemon.colored_name(),
+        user_current_pokemon.current_hp,
+        user_current_pokemon.max_hp,
+    );
 
     loop {
         // User selects a move
@@ -88,7 +95,7 @@ fn main() {
 }
 
 fn sleep_print() {
-    let delay = time::Duration::from_millis(10);
+    let delay = Duration::from_millis(10);
 
     println!("\n>");
     for i in 2..102 {
@@ -130,7 +137,8 @@ fn build_user_team(pokemon_data: &HashMap<u32, Pokemon>) -> Vec<Pokemon> {
     sorted_pokemon_available.sort_by_key(|entry| *entry.0);
 
     println!("Choose a Rustémon! (Enter a number)");
-    for (id, pokemon) in &sorted_pokemon_available {
+    for (id, pokemon) in sorted_pokemon_available {
+        sleep(Duration::from_millis(20));
         println!("{}: {}", id, pokemon.colored_name())
     }
 
