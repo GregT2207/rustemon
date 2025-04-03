@@ -4,7 +4,7 @@ mod pokemon;
 
 use colored::Colorize;
 use core::time;
-use data::{pokemon as pokemon_data, pokemon_index};
+use data::pokemon as pokemon_data;
 use pokemon::{Pokemon, PoketypeColor};
 use rand::Rng;
 use std::collections::HashMap;
@@ -126,13 +126,12 @@ fn print_pokeball_message(message: &str) {
 fn build_user_team(pokemon_data: &HashMap<u32, Pokemon>) -> Vec<Pokemon> {
     let mut user_pokemon: Vec<Pokemon> = Vec::new();
 
-    let pokemon_index = pokemon_index();
-    let mut sorted_pokemon_index: Vec<_> = pokemon_index.iter().collect();
-    sorted_pokemon_index.sort_by_key(|(_name, index)| *index);
+    let mut sorted_pokemon_available: Vec<_> = pokemon_data.iter().collect();
+    sorted_pokemon_available.sort_by_key(|entry| *entry.0);
 
     println!("Choose a Rustémon! (Enter a number)");
-    for (name, id) in &sorted_pokemon_index {
-        println!("{}: {}", id, name.to_uppercase())
+    for (id, pokemon) in &sorted_pokemon_available {
+        println!("{}: {}", id, pokemon.colored_name())
     }
 
     while user_pokemon.len() < USER_POKEMON_MAX {
