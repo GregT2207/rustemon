@@ -78,6 +78,9 @@ impl Pokemon {
             damage *= 1.5;
         }
 
+        // Apply level bonus
+        damage *= 1.0 + (attacker.level.value() as f32 / 100.0);
+
         damage.round() as u16
     }
 }
@@ -368,5 +371,52 @@ pub trait PoketypeColor {
     fn colored_name(&self) -> ColoredString {
         let color = self.poketype().color();
         self.name().truecolor(color.0, color.1, color.2)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn all_damage_factors_included_in_calculation() {
+        // 90 * 2 * 1.5 * 1.48 = 399.6
+        // Rounded to 400
+
+        let attacker_move_power = 90;
+        let attacker_type = Poketype::Fire;
+        let target_type = Poketype::Grass;
+        let attacker_move_type = Poketype::Fire;
+        let attacker_level: u8 = 48;
+
+        let attacking_move = Arc::new(Pokemove {
+            name: String::from("Flamethrower"),
+            poketype: attacker_move_type,
+            power: attacker_move_power,
+            accuracy: Percentage::new(85),
+        });
+
+        let attacker = Pokemon {
+            name: String::from("Charmander"),
+            poketype: attacker_type,
+            pokemoves: [Some(attacking_move.clone()), None, None, None],
+            level: Percentage::new(attacker_level),
+            accuracy: Percentage::new(95),
+            max_hp: 160,
+            current_hp: 160,
+        };
+        let target = Pokemon {
+            name: String::from("Bulbasaur"),
+            poketype: target_type,
+            pokemoves: [None, None, None, None],
+            level: Percentage::new(10),
+            accuracy: Percentage::new(95),
+            max_hp: 160,
+            current_hp: 160,
+        };
+
+        let damage = Pokemon::calculate_damage(&attacking_move, &attacker, &target);
+
+        assert_eq!(damage, 400);
     }
 }
