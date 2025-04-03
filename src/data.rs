@@ -52,7 +52,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
                 name: String::from("Tackle"),
                 poketype: Poketype::Normal,
                 power: 40,
-                accuracy: Percentage::new(100),
+                accuracy: Percentage::new(95),
             }),
         ),
         (
@@ -70,7 +70,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
                 name: String::from("Ember"),
                 poketype: Poketype::Fire,
                 power: 40,
-                accuracy: Percentage::new(100),
+                accuracy: Percentage::new(95),
             }),
         ),
         (
@@ -79,7 +79,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
                 name: String::from("Flamethrower"),
                 poketype: Poketype::Fire,
                 power: 90,
-                accuracy: Percentage::new(100),
+                accuracy: Percentage::new(85),
             }),
         ),
         (
@@ -97,7 +97,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
                 name: String::from("Water Gun"),
                 poketype: Poketype::Water,
                 power: 40,
-                accuracy: Percentage::new(100),
+                accuracy: Percentage::new(95),
             }),
         ),
         (
@@ -115,7 +115,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
                 name: String::from("Leaf Blade"),
                 poketype: Poketype::Grass,
                 power: 70,
-                accuracy: Percentage::new(95),
+                accuracy: Percentage::new(90),
             }),
         ),
         (
@@ -133,7 +133,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
                 name: String::from("Thunderbolt"),
                 poketype: Poketype::Electric,
                 power: 90,
-                accuracy: Percentage::new(100),
+                accuracy: Percentage::new(85),
             }),
         ),
         (
@@ -142,7 +142,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
                 name: String::from("Frost Breath"),
                 poketype: Poketype::Ice,
                 power: 40,
-                accuracy: Percentage::new(100),
+                accuracy: Percentage::new(95),
             }),
         ),
         (
@@ -151,7 +151,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
                 name: String::from("Ice Beam"),
                 poketype: Poketype::Ice,
                 power: 90,
-                accuracy: Percentage::new(100),
+                accuracy: Percentage::new(90),
             }),
         ),
         (
@@ -169,7 +169,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
                 name: String::from("Close Combat"),
                 poketype: Poketype::Fighting,
                 power: 120,
-                accuracy: Percentage::new(100),
+                accuracy: Percentage::new(80),
             }),
         ),
         (
@@ -187,7 +187,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
                 name: String::from("Sludge Bomb"),
                 poketype: Poketype::Poison,
                 power: 90,
-                accuracy: Percentage::new(100),
+                accuracy: Percentage::new(85),
             }),
         ),
         (
@@ -196,7 +196,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
                 name: String::from("Mud-Slap"),
                 poketype: Poketype::Ground,
                 power: 20,
-                accuracy: Percentage::new(100),
+                accuracy: Percentage::new(95),
             }),
         ),
         (
@@ -205,7 +205,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
                 name: String::from("Earthquake"),
                 poketype: Poketype::Ground,
                 power: 100,
-                accuracy: Percentage::new(100),
+                accuracy: Percentage::new(85),
             }),
         ),
         (
@@ -223,7 +223,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
                 name: String::from("Wing Attack"),
                 poketype: Poketype::Flying,
                 power: 60,
-                accuracy: Percentage::new(100),
+                accuracy: Percentage::new(95),
             }),
         ),
         (
@@ -241,7 +241,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
                 name: String::from("Psybeam"),
                 poketype: Poketype::Psychic,
                 power: 65,
-                accuracy: Percentage::new(100),
+                accuracy: Percentage::new(95),
             }),
         ),
         (
@@ -259,7 +259,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
                 name: String::from("X-Scissor"),
                 poketype: Poketype::Bug,
                 power: 80,
-                accuracy: Percentage::new(100),
+                accuracy: Percentage::new(90),
             }),
         ),
         (
@@ -286,7 +286,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
                 name: String::from("Bite"),
                 poketype: Poketype::Dark,
                 power: 60,
-                accuracy: Percentage::new(100),
+                accuracy: Percentage::new(95),
             }),
         ),
         (
@@ -295,7 +295,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
                 name: String::from("Crunch"),
                 poketype: Poketype::Dark,
                 power: 80,
-                accuracy: Percentage::new(100),
+                accuracy: Percentage::new(90),
             }),
         ),
         (
@@ -331,7 +331,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
                 name: String::from("Moonblast"),
                 poketype: Poketype::Fairy,
                 power: 95,
-                accuracy: Percentage::new(100),
+                accuracy: Percentage::new(90),
             }),
         ),
         (
