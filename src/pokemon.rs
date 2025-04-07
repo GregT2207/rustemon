@@ -1,7 +1,7 @@
 use crate::pokemath::Percentage;
+use crate::sleep_print;
 use colored::{ColoredString, Colorize};
 use rand::Rng;
-use std::error::Error;
 use std::fmt::Debug;
 use std::sync::Arc;
 
@@ -17,34 +17,38 @@ pub struct Pokemon {
 }
 
 impl Pokemon {
-    pub fn pokemove_by_index(&self, move_index: u8) -> Result<Arc<Pokemove>, Box<dyn Error>> {
-        let pokemove = self
-            .pokemoves
-            .get(move_index as usize)
-            .ok_or(format!(
-                "Move index {} out of bounds (use 0 - 3)",
-                move_index
-            ))?
-            .as_ref()
-            .ok_or(format!("Move {} doesn't exist", move_index + 1))?;
-
-        Ok(Arc::clone(pokemove))
-    }
-
-    pub fn attack(
-        &mut self,
-        attacking_move: &Pokemove,
-        target: &mut Pokemon,
-    ) -> Result<bool, Box<dyn Error>> {
+    pub fn attack(&mut self, attacking_move: &Pokemove, target: &mut Pokemon) -> bool {
+        // Check for successfully landed attack
         if !self.attack_landed_by_accuracy(attacking_move.accuracy.value()) {
-            return Ok(false);
+            sleep_print();
+            println!("Oh no! {} missed...", self.colored_name());
+            return false;
         }
 
-        target.current_hp -= Self::calculate_damage(&attacking_move, &self, &target);
+        // Calculate and apply damage
+        let damage = Self::calculate_damage(&attacking_move, &self, &target);
+        target.current_hp = if damage >= target.current_hp {
+            0
+        } else {
+            target.current_hp - damage
+        };
 
-        self.level_up();
+        sleep_print();
+        println!(
+            "{} used {} on {} ({} / {})!",
+            self.colored_name(),
+            attacking_move.colored_name(),
+            target.colored_name(),
+            target.current_hp,
+            target.max_hp
+        );
 
-        Ok(true)
+        // Level up if enough damage is dealt
+        if damage > (target.current_hp as f32 * 0.5).round() as u16 {
+            self.level_up();
+        }
+
+        true
     }
 
     fn attack_landed_by_accuracy(&self, attacking_move_accuracy: u8) -> bool {
@@ -58,6 +62,14 @@ impl Pokemon {
 
     fn level_up(&mut self) -> u8 {
         self.level = Percentage::new(self.level.value() + 1);
+
+        sleep_print();
+        println!(
+            "{} reached level {}!",
+            self.colored_name(),
+            self.level.value()
+        );
+
         self.level.value()
     }
 }
