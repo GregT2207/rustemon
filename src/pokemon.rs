@@ -3,13 +3,13 @@ use crate::sleep_print;
 use colored::{ColoredString, Colorize};
 use rand::Rng;
 use std::fmt::Debug;
-use std::sync::Arc;
+use std::rc::Rc;
 
 #[derive(Clone, Debug)]
 pub struct Pokemon {
     pub name: String,
     pub poketype: Poketype,
-    pub pokemoves: [Option<Arc<Pokemove>>; 4],
+    pub pokemoves: [Option<Rc<Pokemove>>; 4],
     pub level: Percentage,
     pub accuracy: Percentage,
     pub max_hp: u16,
@@ -401,7 +401,7 @@ mod tests {
         let attacker_move_type = Poketype::Fire;
         let attacker_level: u8 = 48;
 
-        let attacking_move = Arc::new(Pokemove {
+        let attacking_move = Rc::new(Pokemove {
             name: String::from("Flamethrower"),
             poketype: attacker_move_type,
             power: attacker_move_power,

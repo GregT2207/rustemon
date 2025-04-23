@@ -1,7 +1,7 @@
 use crate::pokemath::Percentage;
 use crate::pokemon::{Pokemon, Pokemove, Poketype};
 use std::collections::HashMap;
-use std::sync::Arc;
+use std::rc::Rc;
 
 fn pokemove_index() -> HashMap<&'static str, u32> {
     HashMap::from([
@@ -44,11 +44,11 @@ fn pokemove_index() -> HashMap<&'static str, u32> {
     ])
 }
 
-pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
+pub fn pokemoves() -> HashMap<u32, Rc<Pokemove>> {
     HashMap::from([
         (
             1,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Tackle"),
                 poketype: Poketype::Normal,
                 power: 40,
@@ -57,7 +57,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             2,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Quick Attack"),
                 poketype: Poketype::Normal,
                 power: 40,
@@ -66,7 +66,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             3,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Ember"),
                 poketype: Poketype::Fire,
                 power: 40,
@@ -75,7 +75,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             4,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Flamethrower"),
                 poketype: Poketype::Fire,
                 power: 90,
@@ -84,7 +84,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             5,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Bubble"),
                 poketype: Poketype::Water,
                 power: 40,
@@ -93,7 +93,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             6,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Water Gun"),
                 poketype: Poketype::Water,
                 power: 40,
@@ -102,7 +102,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             7,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Vine Whip"),
                 poketype: Poketype::Grass,
                 power: 45,
@@ -111,7 +111,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             8,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Leaf Blade"),
                 poketype: Poketype::Grass,
                 power: 70,
@@ -120,7 +120,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             9,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Thunder Shock"),
                 poketype: Poketype::Electric,
                 power: 40,
@@ -129,7 +129,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             10,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Thunderbolt"),
                 poketype: Poketype::Electric,
                 power: 90,
@@ -138,7 +138,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             11,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Frost Breath"),
                 poketype: Poketype::Ice,
                 power: 40,
@@ -147,7 +147,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             12,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Ice Beam"),
                 poketype: Poketype::Ice,
                 power: 90,
@@ -156,7 +156,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             13,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Karate Chop"),
                 poketype: Poketype::Fighting,
                 power: 50,
@@ -165,7 +165,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             14,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Close Combat"),
                 poketype: Poketype::Fighting,
                 power: 120,
@@ -174,7 +174,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             15,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Poison Sting"),
                 poketype: Poketype::Poison,
                 power: 15,
@@ -183,7 +183,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             16,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Sludge Bomb"),
                 poketype: Poketype::Poison,
                 power: 90,
@@ -192,7 +192,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             17,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Mud-Slap"),
                 poketype: Poketype::Ground,
                 power: 20,
@@ -201,7 +201,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             18,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Earthquake"),
                 poketype: Poketype::Ground,
                 power: 100,
@@ -210,7 +210,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             19,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Gust"),
                 poketype: Poketype::Flying,
                 power: 40,
@@ -219,7 +219,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             20,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Wing Attack"),
                 poketype: Poketype::Flying,
                 power: 60,
@@ -228,7 +228,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             21,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Confusion"),
                 poketype: Poketype::Psychic,
                 power: 50,
@@ -237,7 +237,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             22,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Psybeam"),
                 poketype: Poketype::Psychic,
                 power: 65,
@@ -246,7 +246,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             23,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Bug Bite"),
                 poketype: Poketype::Bug,
                 power: 60,
@@ -255,7 +255,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             24,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("X-Scissor"),
                 poketype: Poketype::Bug,
                 power: 80,
@@ -264,7 +264,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             25,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Rock Throw"),
                 poketype: Poketype::Rock,
                 power: 50,
@@ -273,7 +273,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             26,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Stone Edge"),
                 poketype: Poketype::Rock,
                 power: 100,
@@ -282,7 +282,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             31,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Bite"),
                 poketype: Poketype::Dark,
                 power: 60,
@@ -291,7 +291,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             32,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Crunch"),
                 poketype: Poketype::Dark,
                 power: 80,
@@ -300,7 +300,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             33,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Metal Claw"),
                 poketype: Poketype::Steel,
                 power: 50,
@@ -309,7 +309,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             34,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Iron Tail"),
                 poketype: Poketype::Steel,
                 power: 100,
@@ -318,7 +318,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             35,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Fairy Wind"),
                 poketype: Poketype::Fairy,
                 power: 40,
@@ -327,7 +327,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             36,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Moonblast"),
                 poketype: Poketype::Fairy,
                 power: 95,
@@ -336,7 +336,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             27,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Lick"),
                 poketype: Poketype::Ghost,
                 power: 30,
@@ -345,7 +345,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             28,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Shadow Ball"),
                 poketype: Poketype::Ghost,
                 power: 80,
@@ -354,7 +354,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             29,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Dragon Breath"),
                 poketype: Poketype::Dragon,
                 power: 60,
@@ -363,7 +363,7 @@ pub fn pokemoves() -> HashMap<u32, Arc<Pokemove>> {
         ),
         (
             30,
-            Arc::new(Pokemove {
+            Rc::new(Pokemove {
                 name: String::from("Dragon Claw"),
                 poketype: Poketype::Dragon,
                 power: 80,

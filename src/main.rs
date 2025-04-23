@@ -9,7 +9,7 @@ use pokemon::{Pokemon, Pokemove, PoketypeColor};
 use rand::Rng;
 use std::collections::HashMap;
 use std::io::{self, Write, stdout};
-use std::sync::Arc;
+use std::rc::Rc;
 use std::thread::sleep;
 use std::time::Duration;
 use trainer::{Trainer, TrainerKind};
@@ -138,7 +138,7 @@ fn build_enemy_team(pokemon_data: &HashMap<u32, Pokemon>) -> Vec<Pokemon> {
     enemy_pokemon
 }
 
-fn user_move(pokemon: &Pokemon) -> Arc<Pokemove> {
+fn user_move(pokemon: &Pokemon) -> Rc<Pokemove> {
     sleep_print();
     println!(
         "What move should {} use? (Enter a number)",
@@ -181,7 +181,7 @@ fn user_move(pokemon: &Pokemon) -> Arc<Pokemove> {
     }
 }
 
-fn enemy_move(pokemon: &Pokemon) -> Arc<Pokemove> {
+fn enemy_move(pokemon: &Pokemon) -> Rc<Pokemove> {
     loop {
         let random_num = rand::rng().random_range(0..4);
         if let Some(pokemove) = pokemon.pokemoves[random_num].clone() {
